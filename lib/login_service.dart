@@ -10,56 +10,24 @@ import 'constants.dart';
 ZegoUIKitPrebuiltCallController? callController;
 
 /// local virtual login
-Future<void> login({
-  required String userID,
-  required String userName,
-}) async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.setString(cacheUserIDKey, userID);
-
-  currentUser.id = userID;
-  currentUser.name = 'user_$userID';
-}
+// Future<void> login({
+//   required String userID,
+//   required String userName,
+// }) async {
+//   final prefs = await SharedPreferences.getInstance();
+//   prefs.setString(cacheUserIDKey, userID);
+//
+//   currentUser.id = userID;
+//   currentUser.name = 'user_$userID';
+// }
 
 /// local virtual logout
-Future<void> logout() async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.remove(cacheUserIDKey);
-}
+// Future<void> logout() async {
+//   final prefs = await SharedPreferences.getInstance();
+//   prefs.remove(cacheUserIDKey);
+// }
 
 /// on user login
-void onUserLogin() {
-  callController ??= ZegoUIKitPrebuiltCallController();
-
-  /// 4/5. initialized ZegoUIKitPrebuiltCallInvitationService when account is logged in or re-logged in
-  ZegoUIKitPrebuiltCallInvitationService().init(
-    appID: 2096738575 /*input your AppID*/,
-    appSign: "c005f1fd4436946f1855d26ca214fcba0544baf6d2850ef0d64414510094ce14" /*input your AppSign*/,
-    userID: currentUser.id,
-    userName: currentUser.name,
-    notifyWhenAppRunningInBackgroundOrQuit: false,
-    plugins: [ZegoUIKitSignalingPlugin()],
-    controller: callController,
-    requireConfig: (ZegoCallInvitationData data) {
-      final config = (data.invitees.length > 1)
-          ? ZegoCallType.videoCall == data.type
-          ? ZegoUIKitPrebuiltCallConfig.groupVideoCall()
-          : ZegoUIKitPrebuiltCallConfig.groupVoiceCall()
-          : ZegoCallType.videoCall == data.type
-          ? ZegoUIKitPrebuiltCallConfig.oneOnOneVideoCall()
-          : ZegoUIKitPrebuiltCallConfig.oneOnOneVoiceCall();
-
-      config.avatarBuilder = customAvatarBuilder;
-
-      /// support minimizing, show minimizing button
-      config.topMenuBarConfig.isVisible = true;
-      config.topMenuBarConfig.buttons
-          .insert(0, ZegoMenuBarButtonName.minimizingButton);
-
-      return config;
-    },
-  );
-}
 
 /// on user logout
 void onUserLogout() {

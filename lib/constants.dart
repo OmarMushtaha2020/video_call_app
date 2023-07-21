@@ -1,13 +1,17 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:video_voice_call/login_screen.dart';
+import 'package:video_voice_call/register_screen.dart';
 
 // Project imports:
 import 'home_page.dart';
 import 'login_page.dart';
 
 class PageRouteNames {
-  static const String login = '/login';
+  // static const String login = '/login';
   static const String home = '/home_page';
+  static const String login_screen = '/login_screen';
+  static const String register = '/register_screen';
 }
 
 const TextStyle textStyle = TextStyle(
@@ -17,23 +21,25 @@ const TextStyle textStyle = TextStyle(
 );
 
 Map<String, WidgetBuilder> routes = {
-  PageRouteNames.login: (context) => const LoginPage(),
+  PageRouteNames.login_screen: (context) =>  LoginScreen(),
+  PageRouteNames.register: (context) =>  RegisterScreen(),
+
   PageRouteNames.home: (context) => const HomePage(),
 };
 
-class UserInfo {
-  String id = '';
-  String name = '';
-
-  UserInfo({
-    required this.id,
-    required this.name,
-  });
-
-  bool get isEmpty => id.isEmpty;
-
-  UserInfo.empty();
-}
-
-UserInfo currentUser = UserInfo.empty();
-const String cacheUserIDKey = 'cache_user_id_key';
+// class UserInfo {
+//   String id = '';
+//   String name = '';
+//
+//   UserInfo({
+//     required this.id,
+//     required this.name,
+//   });
+//
+//   bool get isEmpty => id.isEmpty;
+//
+//   UserInfo.empty();
+// }
+//
+// UserInfo currentUser = UserInfo.empty();
+// const String cacheUserIDKey = 'cache_user_id_key';

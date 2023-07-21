@@ -1,25 +1,30 @@
 // Flutter imports:
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:zego_uikit/zego_uikit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:video_voice_call/cubit/bloc.dart';
+import 'package:video_voice_call/firebase_options.dart';
+import 'package:video_voice_call/register_screen.dart';
+import 'package:video_voice_call/shared/network/local/cacth_helper.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-
-// Project imports:
 import 'constants.dart';
-import 'login_service.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
 
-  final prefs = await SharedPreferences.getInstance();
-  final cacheUserID = prefs.get(cacheUserIDKey) as String? ?? '';
-  if (cacheUserID.isNotEmpty) {
-    currentUser.id = cacheUserID;
-    currentUser.name = 'user_$cacheUserID';
-  }
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacthHelper.inti();
+        token= CacthHelper.get_Data(key: "token");
+print("the token is ${token}");
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // final prefs = await SharedPreferences.getInstance();
+  // final cacheUserID = prefs.get(cacheUserIDKey) as String? ?? '';
+  // if (cacheUserID.isNotEmpty) {
+  //   currentUser.id = cacheUserID;
+  //   currentUser.name = 'user_$cacheUserID';
+  // }
 
   /// 1/5: define a navigator key
   final navigatorKey = GlobalKey<NavigatorState>();
@@ -32,15 +37,16 @@ void main() async {
       [ZegoUIKitSignalingPlugin()],
     );
 
-    runApp(MyApp(navigatorKey: navigatorKey));
+    runApp(MyApp(navigatorKey: navigatorKey,token: token,));
   });
 }
 
 class MyApp extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
-
-  const MyApp({
+var token;
+   MyApp({
     required this.navigatorKey,
+    this.token,
     Key? key,
   }) : super(key: key);
 
@@ -53,35 +59,40 @@ class MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    if (currentUser.id.isNotEmpty) {
-      onUserLogin();
-    }
+    // if (currentUser.id.isNotEmpty) {
+    //   onUserLogin();
+    // }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: routes,
-      initialRoute:
-      currentUser.id.isEmpty ? PageRouteNames.login : PageRouteNames.home,
-      theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (BuildContext context) =>AppCubit()..getData()..getDataUser()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: routes,
+        initialRoute:widget.token!=null? PageRouteNames.home:PageRouteNames.login_screen,
+        theme: ThemeData(scaffoldBackgroundColor: const Color(0xFFEFEFEF)),
 
-      /// 3/5: register the navigator key to MaterialApp
-      navigatorKey: widget.navigatorKey,
-      builder: (BuildContext context, Widget? child) {
-        return Stack(
-          children: [
-            child!,
+        /// 3/5: register the navigator key to MaterialApp
+        navigatorKey: widget.navigatorKey,
+        builder: (BuildContext context, Widget? child) {
+          return Stack(
+            children: [
+              child!,
 
-            /// support minimizing
-            ZegoUIKitPrebuiltCallMiniOverlayPage(
-              contextQuery: () {
-                return widget.navigatorKey.currentState!.context;
-              },
-            ),
-          ],
-        );
-      },
+              /// support minimizing
+              ZegoUIKitPrebuiltCallMiniOverlayPage(
+                contextQuery: () {
+                  return widget.navigatorKey.currentState!.context;
+                },
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

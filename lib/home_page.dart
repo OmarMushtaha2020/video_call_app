@@ -1,16 +1,12 @@
 // Flutter imports:
-import 'package:faker/faker.dart';
-import 'package:flutter/material.dart';
+import 'package:faker/faker.dart';import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:video_voice_call/cubit/bloc.dart';
+import 'package:video_voice_call/cubit/status.dart';
 
-// Package imports:
 import 'package:zego_uikit/zego_uikit.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
-
-// Project imports:
-import 'constants.dart';
-import 'login_service.dart';
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -19,38 +15,37 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final TextEditingController singleInviteeUserIDTextCtrl =
-  TextEditingController();
-  final TextEditingController groupInviteeUserIDsTextCtrl =
-  TextEditingController();
+@override
+  void initState() {
+super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.white,
-        body: WillPopScope(
-          onWillPop: () async {
-            return false;
-          },
-          child: Stack(
-            children: [
-              Positioned(
-                top: 20,
-                right: 10,
-                child: logoutButton(),
+    return BlocConsumer<AppCubit,AppStatus>(
+      listener: (context,status){},
+      builder: (context,status){
+        return  SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              title: const Text("Home Screen"),
+            ),
+
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
+            body: WillPopScope(
+              onWillPop: () async {
+                return false;
+              },
+              child: Stack(
+                children: [
+                  userListView(),
+                ],
               ),
-              Positioned(
-                top: 50,
-                left: 10,
-                child: Text('Your Phone Number: ${currentUser.id}'),
-              ),
-              userListView(),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -67,14 +62,14 @@ class HomePageState extends State<HomePage> {
         iconSize: 20,
         color: Colors.white,
         onPressed: () {
-          logout().then((value) {
-            onUserLogout();
-
-            Navigator.pushNamed(
-              context,
-              PageRouteNames.login,
-            );
-          });
+          // logout().then((value) {
+          //   onUserLogout();
+          //   //
+          //   // Navigator.pushNamed(
+          //   //   context,
+          //   //   PageRouteNames.login,
+          //   // );
+          // });
         },
       ),
     );
@@ -84,80 +79,46 @@ class HomePageState extends State<HomePage> {
     final random = RandomGenerator();
     final faker = Faker();
 
-    return Center(
+    return Padding(
+      padding: const EdgeInsets.only(top: 10),
       child: ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 10,
+        itemCount: AppCubit.get(context).user.length,
         itemBuilder: (context, index) {
-          late TextEditingController inviteeUsersIDTextCtrl;
-          late List<Widget> userInfo;
-          if (0 == index) {
-            inviteeUsersIDTextCtrl = singleInviteeUserIDTextCtrl;
-            userInfo = [
-              const Text('invitee name ('),
-              inviteeIDFormField(
-                textCtrl: inviteeUsersIDTextCtrl,
-                formatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
-                ],
-                labelText: 'invitee ID',
-                hintText: 'plz enter invitee ID',
-              ),
-              const Text(')'),
-            ];
-          } else if (1 == index) {
-            inviteeUsersIDTextCtrl = groupInviteeUserIDsTextCtrl;
-            userInfo = [
-              const Text('group name ('),
-              inviteeIDFormField(
-                textCtrl: inviteeUsersIDTextCtrl,
-                formatters: [
-                  FilteringTextInputFormatter.allow(RegExp('[0-9,]')),
-                ],
-                labelText: 'invitees ID',
-                hintText: "separate IDs by ','",
-              ),
-              const Text(')'),
-            ];
-          } else {
-            inviteeUsersIDTextCtrl = TextEditingController();
-            userInfo = [
-              Text(
-                '${faker.person.firstName()}(${random.fromPattern([
-                  '######'
-                ])})',
-                style: textStyle,
-              )
-            ];
-          }
+           TextEditingController inviteeUsersIDTextCtrl=TextEditingController();
+           inviteeUsersIDTextCtrl.text = AppCubit.get(context).user[index]['name'];
+print(AppCubit.get(context).user[index]['name']);
 
-          return Column(
-            children: [
-              Row(
-                children: [
-                  const SizedBox(width: 20),
-                  ...userInfo,
-                  Expanded(child: Container()),
-                  sendCallButton(
-                    isVideoCall: false,
-                    inviteeUsersIDTextCtrl: inviteeUsersIDTextCtrl,
-                    onCallFinished: onSendCallInvitationFinished,
-                  ),
-                  sendCallButton(
-                    isVideoCall: true,
-                    inviteeUsersIDTextCtrl: inviteeUsersIDTextCtrl,
-                    onCallFinished: onSendCallInvitationFinished,
-                  ),
-                  const SizedBox(width: 20),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-                child: Divider(height: 1.0, color: Colors.grey),
-              ),
-            ],
-          );
+           return Padding(
+             padding: const EdgeInsets.only(left: 10,right: 10,top: 10),
+             child: Column(
+              children: [
+                Row(
+                  children: [
+                    Text("${AppCubit.get(context).user[index]['name']}"),
+                    const SizedBox(width: 20),
+                    Expanded(child: Container()),
+                    sendCallButton(
+                      isVideoCall: false,
+                      inviteeUsersIDTextCtrl: inviteeUsersIDTextCtrl,
+                      onCallFinished: onSendCallInvitationFinished,
+                    ),
+                    sendCallButton(
+                      isVideoCall: true,
+                      inviteeUsersIDTextCtrl: inviteeUsersIDTextCtrl,
+                      onCallFinished: onSendCallInvitationFinished,
+                    ),
+                    const SizedBox(width: 20),
+                  ],
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 0, horizontal: 1),
+                  child: Divider(height: 1.0, color: Colors.grey),
+                ),
+              ],
+          ),
+           );
         },
       ),
     );
@@ -202,33 +163,7 @@ class HomePageState extends State<HomePage> {
   }
 }
 
-Widget inviteeIDFormField({
-  required TextEditingController textCtrl,
-  List<TextInputFormatter>? formatters,
-  String hintText = '',
-  String labelText = '',
-}) {
-  const textStyle = TextStyle(fontSize: 12.0);
-  return Expanded(
-    flex: 100,
-    child: SizedBox(
-      height: 30,
-      child: TextFormField(
-        style: textStyle,
-        controller: textCtrl,
-        inputFormatters: formatters,
-        decoration: InputDecoration(
-          isDense: true,
-          hintText: hintText,
-          hintStyle: textStyle,
-          labelText: labelText,
-          labelStyle: textStyle,
-          border: const OutlineInputBorder(),
-        ),
-      ),
-    ),
-  );
-}
+
 
 Widget sendCallButton({
   required bool isVideoCall,
