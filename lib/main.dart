@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_voice_call/cubit/bloc.dart';
 import 'package:video_voice_call/firebase_options.dart';
-import 'package:video_voice_call/register_screen.dart';
+import 'package:video_voice_call/module/register_screen.dart';
 import 'package:video_voice_call/shared/network/local/cacth_helper.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
-import 'constants.dart';
+import 'module/constants.dart';
 
 void main() async {
 

@@ -45,17 +45,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyD71Qu26g_zMnFOi90rKwUCOyxPqCsj894',
-    appId: '1:9686566444:web:dc9f29f8284b174c107389',
+    appId: '1:9686566444:web:1fc7ba2b4b8af4f9107389',
     messagingSenderId: '9686566444',
     projectId: 'zegocloud-1dbc3',
     authDomain: 'zegocloud-1dbc3.firebaseapp.com',
     storageBucket: 'zegocloud-1dbc3.appspot.com',
-    measurementId: 'G-JXEH8LZK9D',
+    measurementId: 'G-2GSYXVMBRY',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDkbT6jbUJMRTzx2Dv_7anKX9zB0VZ9yO0',
-    appId: '1:9686566444:android:7ed0d3f17147dd17107389',
+    appId: '1:9686566444:android:10c2849b412b7933107389',
     messagingSenderId: '9686566444',
     projectId: 'zegocloud-1dbc3',
     storageBucket: 'zegocloud-1dbc3.appspot.com',
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDF2ioQhZ-GD-AUiyQKFquqpOQokvPLuCo',
-    appId: '1:9686566444:ios:9a584ddac0892df1107389',
+    appId: '1:9686566444:ios:32c3bbec6db1caf7107389',
     messagingSenderId: '9686566444',
     projectId: 'zegocloud-1dbc3',
     storageBucket: 'zegocloud-1dbc3.appspot.com',
@@ -73,7 +73,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDF2ioQhZ-GD-AUiyQKFquqpOQokvPLuCo',
-    appId: '1:9686566444:ios:48622d13019cacb6107389',
+    appId: '1:9686566444:ios:a04b8a176c3f2ff7107389',
     messagingSenderId: '9686566444',
     projectId: 'zegocloud-1dbc3',
     storageBucket: 'zegocloud-1dbc3.appspot.com',

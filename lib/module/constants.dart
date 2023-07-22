@@ -1,11 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:video_voice_call/login_screen.dart';
-import 'package:video_voice_call/register_screen.dart';
+import 'package:video_voice_call/module/login_screen.dart';
+import 'package:video_voice_call/module/register_screen.dart';
 
 // Project imports:
 import 'home_page.dart';
-import 'login_page.dart';
 
 class PageRouteNames {
   // static const String login = '/login';

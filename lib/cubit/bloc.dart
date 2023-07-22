@@ -3,13 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:video_voice_call/common.dart';
+import 'package:video_voice_call/module/common.dart';
 import 'package:video_voice_call/cubit/status.dart';
-import 'package:video_voice_call/login_service.dart';
-import 'package:video_voice_call/register_screen.dart';
+import 'package:video_voice_call/module/login_service.dart';
 import 'package:video_voice_call/shared/network/local/cacth_helper.dart';
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 import 'package:zego_uikit_signaling_plugin/zego_uikit_signaling_plugin.dart';
+
+import '../module/register_screen.dart';
 
 class AppCubit extends Cubit<AppStatus>{
 
