@@ -1,0 +1,27 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:video_voice_call/module/login_screen.dart';
+import 'package:video_voice_call/module/register_screen.dart';
+
+// Project imports:
+import 'home_page.dart';
+
+class PageRouteNames {
+  static const String home = '/home_page';
+  static const String login_screen = '/login_screen';
+  static const String register = '/register_screen';
+}
+
+const TextStyle textStyle = TextStyle(
+  color: Colors.black,
+  fontSize: 13.0,
+  decoration: TextDecoration.none,
+);
+
+Map<String, WidgetBuilder> routes = {
+  PageRouteNames.login_screen: (context) =>  LoginScreen(),
+  PageRouteNames.register: (context) =>  RegisterScreen(),
+
+  PageRouteNames.home: (context) => const HomePage(),
+};
+
