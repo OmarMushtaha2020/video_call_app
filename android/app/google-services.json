@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "9686566444-tgdqq1ecqsu91084uvh5969so8nht8qs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.video_voice_call",
+            "certificate_hash": "6f5cc7064f00dabdbe2902e280d306826f368b13"
+          }
+        },
+        {
           "client_id": "9686566444-ltua311vtoc5jouolp3tv3ps89db557g.apps.googleusercontent.com",
           "client_type": 3
         }

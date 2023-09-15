@@ -1,12 +1,11 @@
-// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_voice_call/cubit/bloc.dart';
 import 'package:video_voice_call/cubit/status.dart';
 import 'package:video_voice_call/module/login_service.dart';
+import 'package:video_voice_call/module/register_screen.dart';
 import 'package:video_voice_call/shared/network/local/cacth_helper.dart';
-
 import 'package:zego_uikit_prebuilt_call/zego_uikit_prebuilt_call.dart';
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,18 +26,21 @@ super.initState();
       listener: (context,status){
 
       },
-      builder: (context,status){
-        return  SafeArea(
-          child: Scaffold(
+      builder: (context,status) {
+        return SafeArea(
+          child:
+          Scaffold(
 
-appBar: AppBar(
-  centerTitle: false,
-  actions: [logoutButton(),],
-  backgroundColor: Colors.blue,
-  title:  Text("User",style: TextStyle(
-    fontSize: 20.sp,
-  ),),
-),
+            appBar: AppBar(
+              centerTitle: false,
+              actions: [logoutButton(),],
+              backgroundColor: Colors.blue,
+              title: Text("User", style: TextStyle(
+                fontSize: 20.sp,
+              ),),
+            ),
+
+
             resizeToAvoidBottomInset: false,
             backgroundColor: Colors.white,
             body: WillPopScope(
@@ -46,19 +48,23 @@ appBar: AppBar(
                 return false;
               },
               child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  AppCubit.get(context).user.isEmpty?Center(
-                    child: Text("There is No User",style: TextStyle(
-                      fontSize: 50.h
-                    ),),
-                  ):   userListView(),
-                ],
+                  alignment: Alignment.center,
+                  children: [
+                    AppCubit
+                        .get(context)
+                        .user
+                        .isEmpty ? Center(
+                      child: Text("There is No User", style: TextStyle(
+                          fontSize: 50.h
+                      ),),
+                    ) : userListView(),
+
+                  ]
               ),
             ),
           ),
         );
-      },
+      }
     );
   }
 
@@ -74,21 +80,24 @@ appBar: AppBar(
         iconSize: 20.h,
         color: Colors.white,
         onPressed: () {
-onUserLogout().then((value){
-  token='';
-  CacthHelper.saveData("token", "$token");
+    onUserLogout().then((value){
+    token='';
+    CacthHelper.saveData("token", "$token");
 
-  Navigator.pushNamedAndRemoveUntil(context, "/login_screen", (route) => false);
-});
-        },
-      ),
+    Navigator.pushNamedAndRemoveUntil(context, "/login_screen", (route) => false);
+    });
+    },
+    )
     );
+
   }
 
   Widget userListView() {
 
     return Padding(
       padding:  EdgeInsets.only(top: 10.h),
+
+
       child: ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -98,9 +107,10 @@ onUserLogout().then((value){
            inviteeUsersIDTextCtrl.text = AppCubit.get(context).user[index]['token'];
 print(AppCubit.get(context).user[index]['name']);
 
-           return Padding(
 
-             padding:  EdgeInsets.only(left: 10.w,right: 10.w,top: 10.h),
+
+           return Padding(
+             padding: const EdgeInsets.only(left: 10,right: 10,top: 10),
              child: Column(
               children: [
                 Row(
@@ -109,6 +119,7 @@ print(AppCubit.get(context).user[index]['name']);
                       fontSize: 16.sp
                     ),),
                      SizedBox(width: 20.w),
+                     SizedBox(width: 20.h),
                     Expanded(child: Container()),
                     sendCallButton(
                       isVideoCall: false,
@@ -120,7 +131,6 @@ print(AppCubit.get(context).user[index]['name']);
                       inviteeUsersIDTextCtrl: inviteeUsersIDTextCtrl,
                       onCallFinished: onSendCallInvitationFinished,
                     ),
-                     SizedBox(width: 20.w),
                   ],
                 ),
                  Padding(
@@ -215,3 +225,6 @@ List<ZegoUIKitUser> getInvitesFromTextCtrl(String textCtrlText) {
 
   return invitees;
 }
+// ZegoUIKitUser(id: "4upzfD3sm7X6OLsHnkwdNMDe3QB2", name: "video"),
+// ZegoUIKitUser(id: "Q7oZyEMCUPeALuZWmC0EA8lSrTu1", name: "omar"),
+// ZegoUIKitUser(id: "1YyLSHedGyNhNlAgr1vWed8nFgj1", name: "smg"),

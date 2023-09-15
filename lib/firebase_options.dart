@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '9686566444',
     projectId: 'zegocloud-1dbc3',
     storageBucket: 'zegocloud-1dbc3.appspot.com',
+    androidClientId: '9686566444-tgdqq1ecqsu91084uvh5969so8nht8qs.apps.googleusercontent.com',
     iosClientId: '9686566444-poj126hol6ieos689d337eqj77jvejua.apps.googleusercontent.com',
     iosBundleId: 'com.example.videoVoiceCall',
   );
@@ -77,6 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '9686566444',
     projectId: 'zegocloud-1dbc3',
     storageBucket: 'zegocloud-1dbc3.appspot.com',
+    androidClientId: '9686566444-tgdqq1ecqsu91084uvh5969so8nht8qs.apps.googleusercontent.com',
     iosClientId: '9686566444-ot681a2lmqh78ac6efrdm5i82asktv86.apps.googleusercontent.com',
     iosBundleId: 'com.example.videoVoiceCall.RunnerTests',
   );
