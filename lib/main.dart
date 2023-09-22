@@ -19,7 +19,7 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
   await CacthHelper.inti();
-
+print("object");
   token= CacthHelper.get_Data(key: "token");
 print("the token is ${token}");
   await Firebase.initializeApp(
