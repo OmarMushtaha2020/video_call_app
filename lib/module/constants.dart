@@ -7,8 +7,6 @@ import 'package:video_voice_call/module/register_screen.dart';
 import 'home_page.dart';
 
 class PageRouteNames {
-
-  // static const String login = '/login';
   static const String home = '/home_page';
   static const String login_screen = '/login_screen';
   static const String register = '/register_screen';
@@ -26,5 +24,4 @@ Map<String, WidgetBuilder> routes = {
 
   PageRouteNames.home: (context) => const HomePage(),
 };
-
 
