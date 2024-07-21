@@ -83,9 +83,9 @@ FirebaseFirestore.instance.collection("user").where("token",isEqualTo: token).ge
       appSign: "c005f1fd4436946f1855d26ca214fcba0544baf6d2850ef0d64414510094ce14" /*input your AppSign*/,
       userID: tokens,
       userName: name,
-      notifyWhenAppRunningInBackgroundOrQuit: false,
+      // notifyWhenAppRunningInBackgroundOrQuit: false,
       plugins: [ZegoUIKitSignalingPlugin()],
-      controller: callController,
+      // controller: callController,
       requireConfig: (ZegoCallInvitationData data) {
         final config = (data.invitees.length > 1)
             ? ZegoCallType.videoCall == data.type
